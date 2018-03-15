@@ -22,7 +22,7 @@ pod 'Jester'
 
 ## Author
 
-vhart, varindra@shopkeep.com
+ShopKeep
 
 ## License
 
