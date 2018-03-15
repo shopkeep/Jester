@@ -1,0 +1,6 @@
+framework module Jester {
+  umbrella header "Jester-umbrella.h"
+
+  export *
+  module * { export * }
+}
