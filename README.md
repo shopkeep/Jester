@@ -5,6 +5,19 @@
 [![License](https://img.shields.io/cocoapods/l/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 [![Platform](https://img.shields.io/cocoapods/p/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 
+- [Example](#example)
+- [How To](#how-to)
+    - [Inputs](#inputs)
+    - [States](#states)
+    - [Effects](#effects)
+    - [Combining The Components](#combining-the-components)
+    - [Generate Mappings](#generate-mappings)
+    - [Sending an Input](#sending-an-input)
+    - [Observing with RxSwift](#observing-with-rxswift)
+    - [Observing with Callbacks](#observing-with-callbacks)
+- [More Info](#more-info)
+- [Requirements](#requirements)
+
 ## Example
 
 ```swift
@@ -91,7 +104,7 @@ class ShopKeepSelfDrivingCar {
 
 There are three components that are needed to set up your state machine:
 
-### Input
+### Inputs
 
 ```swift
 enum Input {
@@ -117,7 +130,7 @@ an `enum` simply for name spacing but the same can be done using a `struct` or `
 You'll also notice that `BaseInput` has a generic type. This specifies the type of argument that can be passed the `BaseInput`'s
 derivative input, `InputWithArgument`.
 
-### State
+### States
 
 ```swift
 enum State {
@@ -133,7 +146,7 @@ enum State {
 Your state machine `State` can be anything, as long as it is `Equatable`.
 `Enum`s generally work well as states, but if the enum required `associated values` you will have to define `equality`.
 
-### Effect
+### Effects
 
 ```swift
 let dropOffPassengers  = wrap { self?.dropOffPassengers($0) }
@@ -148,7 +161,7 @@ While callbacks that are intended to be used for handling input arguments must b
     `(T, StateMachine<State>) -> Void`
 where `T` is the type required.
 
-#### Combining The Components
+### Combining The Components
 
 ```swift
 //    Input                 |     from State      ->      to State             | Effect (callback)
@@ -160,7 +173,7 @@ And I am currently on state `.pickingUpPassengers`
 Then move to state `.drivingToLocation`
 And call the effect `driveToLocation`
 
-#### Generating Mappings
+### Generate Mappings
 
 ```swift
 let mappings: [MappedStateTransition<State>] = { [weak self] in
@@ -180,7 +193,7 @@ Then once you have your mappings you can initialize the state machine with the m
 let machine = StateMachine<State>.init(initialState: .unstarted, mappings: mappings)
 ```
 
-#### Sending An Input
+### Sending An Input
 
 Sending an input to your state machine is straighforward:
 ```swift
@@ -231,7 +244,7 @@ public struct StateTransitionError<State>: Swift.Error, CustomDebugStringConvert
 }
 ```
 
-#### Observing with Callbacks
+### Observing with Callbacks
 
 For those who opt to use callbacks instead of RxSwift, hooking into the updates and transition results is just as simple.
 Simply use the `watcher()` function on your state machine to generate a callback registry, `StateMachineWatcher`.
@@ -254,7 +267,7 @@ watcher.onTransitionResult({ result in
 })
 ```
 
-### More Info
+## More Info
 
 For more info, check out the `Tests` in the `Example` folder. There should be adequate sample code there and in the
 `ShopKeepSelfDrivingCar` code which is also in the `Tests` folder and up above in [Example](#example) section.
