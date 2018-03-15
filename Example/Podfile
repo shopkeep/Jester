@@ -3,5 +3,6 @@ target 'Jester_Tests' do
   pod 'Jester', :path => '../'
   
   pod 'Quick', '~> 1.2.0'
-    pod 'Nimble', '~> 7.0.2'
+  pod 'Nimble', '~> 7.0.2'
+  pod 'RxSwift', '~> 4.0'
 end
