@@ -79,8 +79,8 @@ public class StateMachine<State> {
         }
     }
 
-    public func asObservable() -> StateMachineObservable<State> {
-        return StateMachineObservable<State>(nextStateObservable: currentState.asObservable(),
+    public func watcher() -> StateMachineWatcher<State> {
+        return StateMachineWatcher<State>(nextStateObservable: currentState.asObservable(),
                                              transitionResultObservable: transitionResult)
     }
 
@@ -90,30 +90,43 @@ public class StateMachine<State> {
     }
 }
 
-public class StateMachineObservable<T> {
+public class StateMachineWatcher<T> {
     private var onNext:((T) -> Void)?
     private var onTransitionResult:((StateTransitionResult<T>) -> Void)?
 
-    private let disposeBag = DisposeBag()
+    private var onNextDisposeBag = DisposeBag()
+    private var onTransitionResultDisposeBag = DisposeBag()
+
+    private var nextStateObservable: Observable<T>
+    private var transitionResultObservable: Observable<StateTransitionResult<T>>
 
     init(nextStateObservable: Observable<T>,
          transitionResultObservable: Observable<StateTransitionResult<T>>) {
+        self.nextStateObservable = nextStateObservable
+        self.transitionResultObservable = transitionResultObservable
+    }
+
+    public func onNext(_ onNext: ((T) -> Void)?) {
+        onNextDisposeBag = DisposeBag()
+        self.onNext = onNext
+
+        guard let _ = onNext else { return }
+
         nextStateObservable
             .subscribe(onNext: { [weak self] (state) in
                 self?.onNext?(state)
-            }).disposed(by: disposeBag)
+            }).disposed(by: onNextDisposeBag)
+    }
+
+    public func onTransitionResult(_ onTransitionResult:((StateTransitionResult<T>) -> Void)?) {
+        onTransitionResultDisposeBag = DisposeBag()
+        self.onTransitionResult = onTransitionResult
+
+        guard let _ = onTransitionResult else { return }
 
         transitionResultObservable
             .subscribe(onNext: { [weak self] result in
                 self?.onTransitionResult?(result)
-            }).disposed(by: disposeBag)
-    }
-
-    public func onNext(_ onNext: ((T) -> Void)?) {
-        self.onNext = onNext
-    }
-
-    public func onTransitionResult(_ onTransitionResult:((StateTransitionResult<T>) -> Void)?) {
-        self.onTransitionResult = onTransitionResult
+            }).disposed(by: onTransitionResultDisposeBag)
     }
 }
