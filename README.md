@@ -5,6 +5,12 @@
 [![License](https://img.shields.io/cocoapods/l/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 [![Platform](https://img.shields.io/cocoapods/p/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 
+Jester is a pure swift state machine with a Rx streams and non-Rx callbacks.
+
+The DSL was inspired by [RxAutomaton](https://github.com/inamiy/RxAutomaton).
+
+## Table of Contents
+
 - [Example](#example)
 - [How To](#how-to)
     - [Inputs](#inputs)
