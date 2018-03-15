@@ -7,20 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		878756D947A32B71D4715EEC /* Pods_Jester_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7CD6CC82F2D3FC1C7341E8 /* Pods_Jester_Tests.framework */; };
+		D5B8B638205AC9980022807F /* StateMachineSpec+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B8B637205AC9980022807F /* StateMachineSpec+Rx.swift */; };
+		D5B8B63B205AC9A30022807F /* StateMachineSpec+StateMachineWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B8B639205AC9A30022807F /* StateMachineSpec+StateMachineWatcher.swift */; };
+		D5B8B63C205AC9A30022807F /* ShopKeepSelfDrivingCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B8B63A205AC9A30022807F /* ShopKeepSelfDrivingCar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		05D42B9506D9E9EDDF6575C5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		3DD4CF37E783B832E50C394D /* Jester.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = Jester.podspec; path = ../Jester.podspec; sourceTree = "<group>"; };
+		05D42B9506D9E9EDDF6575C5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3DD4CF37E783B832E50C394D /* Jester.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Jester.podspec; path = ../Jester.podspec; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Jester_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Jester_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		6F8B60A60985DB5E24203475 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		6F8B60A60985DB5E24203475 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		91FEC34191AB0AD67158B44E /* Pods-Jester_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jester_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Jester_Tests/Pods-Jester_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB7CD6CC82F2D3FC1C7341E8 /* Pods_Jester_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jester_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C49E787ECBFDC330F2FFE392 /* Pods-Jester_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jester_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Jester_Tests/Pods-Jester_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D5B8B637205AC9980022807F /* StateMachineSpec+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StateMachineSpec+Rx.swift"; sourceTree = "<group>"; };
+		D5B8B639205AC9A30022807F /* StateMachineSpec+StateMachineWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StateMachineSpec+StateMachineWatcher.swift"; sourceTree = "<group>"; };
+		D5B8B63A205AC9A30022807F /* ShopKeepSelfDrivingCar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopKeepSelfDrivingCar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +70,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				D5B8B63A205AC9A30022807F /* ShopKeepSelfDrivingCar.swift */,
+				D5B8B637205AC9980022807F /* StateMachineSpec+Rx.swift */,
+				D5B8B639205AC9A30022807F /* StateMachineSpec+StateMachineWatcher.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -131,10 +137,6 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					607FACCF1AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0900;
@@ -223,7 +225,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				D5B8B638205AC9980022807F /* StateMachineSpec+Rx.swift in Sources */,
+				D5B8B63C205AC9A30022807F /* ShopKeepSelfDrivingCar.swift in Sources */,
+				D5B8B63B205AC9A30022807F /* StateMachineSpec+StateMachineWatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
