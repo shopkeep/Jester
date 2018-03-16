@@ -1,6 +1,6 @@
 # Jester
 
-[![CI Status](http://img.shields.io/travis/vhart/Jester.svg?style=flat)](https://travis-ci.org/vhart/Jester)
+[![CI Status](http://img.shields.io/travis/shopkeep/Jester.svg?style=flat)](https://travis-ci.org/shopkeep/Jester)
 [![Version](https://img.shields.io/cocoapods/v/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 [![License](https://img.shields.io/cocoapods/l/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
 [![Platform](https://img.shields.io/cocoapods/p/Jester.svg?style=flat)](http://cocoapods.org/pods/Jester)
