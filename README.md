@@ -64,25 +64,25 @@ class ShopKeepSelfDrivingCar {
         let noEffect           = wrap { self?.noEffect($0) }
 
         return [
-            //    Input                 |     from State      ->      to State             | Effect (callback)
-            Input.startEngine           | .unstarted => .parked                            | noEffect,
+            //    Input                 |          From State    ->    To State            | Effect (callback)
+            Input.startEngine           |             .unstarted => .parked                | noEffect,
 
-            Input.driveAround           | .parked => .drivingAround                        | noEffect,
+            Input.driveAround           |                .parked => .drivingAround         | noEffect,
             Input.driveAround           | .droppingOffPassengers => .drivingAround         | noEffect,
 
-            Input.park                  | .drivingAround => .parked                        | noEffect,
-            Input.park                  | .drivingToLocation => .parked                    | noEffect,
+            Input.park                  |         .drivingAround => .parked                | noEffect,
+            Input.park                  |     .drivingToLocation => .parked                | noEffect,
 
-            Input.pickUpPassengers      | .parked => .pickingUpPassengers                  | noEffect,
-            Input.passengersHaveEntered | .pickingUpPassengers => .pickingUpPassengers     | pickedUpPassengers,
-            Input.driveToLocation       | .pickingUpPassengers => .drivingToLocation       | driveToLocation,
-            Input.dropOffPassengers     | .parked => .droppingOffPassengers                | dropOffPassengers,
+            Input.pickUpPassengers      |                .parked => .pickingUpPassengers   | noEffect,
+            Input.passengersHaveEntered |   .pickingUpPassengers => .pickingUpPassengers   | pickedUpPassengers,
+            Input.driveToLocation       |   .pickingUpPassengers => .drivingToLocation     | driveToLocation,
+            Input.dropOffPassengers     |                .parked => .droppingOffPassengers | dropOffPassengers,
 
-            Input.noFailInput           | .unstarted => .unstarted                         | noEffect,
-            Input.noFailInput           | .drivingAround => .drivingAround                 | noEffect,
-            Input.noFailInput           | .drivingToLocation => .drivingToLocation         | noEffect,
-            Input.noFailInput           | .parked => .parked                               | noEffect,
-            Input.noFailInput           | .pickingUpPassengers => .pickingUpPassengers     | noEffect,
+            Input.noFailInput           |             .unstarted => .unstarted             | noEffect,
+            Input.noFailInput           |         .drivingAround => .drivingAround         | noEffect,
+            Input.noFailInput           |     .drivingToLocation => .drivingToLocation     | noEffect,
+            Input.noFailInput           |                .parked => .parked                | noEffect,
+            Input.noFailInput           |   .pickingUpPassengers => .pickingUpPassengers   | noEffect,
             Input.noFailInput           | .droppingOffPassengers => .droppingOffPassengers | noEffect,
             ]
         }()
