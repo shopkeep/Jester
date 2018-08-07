@@ -69,7 +69,7 @@ public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, Stat
     let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void) = { arg, sm in
         guard let arg = arg as? T else { throw MappingError.invalidArgumentType }
         return {
-            effect.effect?(arg, sm)
+            effect.effect(arg, sm)
         }
     }
 
