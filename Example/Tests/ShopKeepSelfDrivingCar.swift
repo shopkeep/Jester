@@ -34,28 +34,27 @@ class ShopKeepSelfDrivingCar {
             let dropOffPassengers  = wrap { self?.dropOffPassengers($0) }
             let pickedUpPassengers = wrap { self?.pickedUpPassengers($0, $1) }
             let driveToLocation    = wrap { self?.driveToLocation($0, $1) }
-            let noEffect           = wrap { self?.noEffect($0) }
 
             return [
-                Input.startEngine           | .unstarted => .parked                            | noEffect,
+                Input.startEngine           | .unstarted => .parked                            | noEffect(),
 
-                Input.driveAround           | .parked => .drivingAround                        | noEffect,
-                Input.driveAround           | .droppingOffPassengers => .drivingAround         | noEffect,
+                Input.driveAround           | .parked => .drivingAround                        | noEffect(),
+                Input.driveAround           | .droppingOffPassengers => .drivingAround         | noEffect(),
 
-                Input.park                  | .drivingAround => .parked                        | noEffect,
-                Input.park                  | .drivingToLocation => .parked                    | noEffect,
+                Input.park                  | .drivingAround => .parked                        | noEffect(),
+                Input.park                  | .drivingToLocation => .parked                    | noEffect(),
 
-                Input.pickUpPassengers      | .parked => .pickingUpPassengers                  | noEffect,
+                Input.pickUpPassengers      | .parked => .pickingUpPassengers                  | noEffect(),
                 Input.passengersHaveEntered | .pickingUpPassengers => .pickingUpPassengers     | pickedUpPassengers,
                 Input.driveToLocation       | .pickingUpPassengers => .drivingToLocation       | driveToLocation,
                 Input.dropOffPassengers     | .parked => .droppingOffPassengers                | dropOffPassengers,
 
-                Input.noFailInput           | .unstarted => .unstarted                         | noEffect,
-                Input.noFailInput           | .drivingAround => .drivingAround                 | noEffect,
-                Input.noFailInput           | .drivingToLocation => .drivingToLocation         | noEffect,
-                Input.noFailInput           | .parked => .parked                               | noEffect,
-                Input.noFailInput           | .pickingUpPassengers => .pickingUpPassengers     | noEffect,
-                Input.noFailInput           | .droppingOffPassengers => .droppingOffPassengers | noEffect,
+                Input.noFailInput           | .unstarted => .unstarted                         | noEffect(),
+                Input.noFailInput           | .drivingAround => .drivingAround                 | noEffect(),
+                Input.noFailInput           | .drivingToLocation => .drivingToLocation         | noEffect(),
+                Input.noFailInput           | .parked => .parked                               | noEffect(),
+                Input.noFailInput           | .pickingUpPassengers => .pickingUpPassengers     | noEffect(),
+                Input.noFailInput           | .droppingOffPassengers => .droppingOffPassengers | noEffect(),
             ]
             }()
 
@@ -73,7 +72,4 @@ class ShopKeepSelfDrivingCar {
     func pickedUpPassengers(_ count: Int, _ machine: StateMachine<State>) {
         numberOfPassengers = count
     }
-
-    private func noEffect(_ machine: StateMachine<State>) {}
-
 }

@@ -75,3 +75,13 @@ public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, Stat
 
     return MappedStateTransition(erasedTransition: typeErasedTransition, effectWithArguments: effectWithArguments)
 }
+
+public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, State>, effect: EffectWrapper<Void, State>) -> MappedStateTransition<State> {
+    let typeErasedTransition = typedTransition.typeErasedTransition
+    let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void) = { _, sm  in
+        return {
+            effect.effect((), sm)
+        }
+    }
+    return MappedStateTransition(erasedTransition: typeErasedTransition, effectWithArguments: effectWithArguments)
+}
