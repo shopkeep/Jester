@@ -42,6 +42,18 @@ public struct MappedStateTransition<State> {
     let erasedTransition: TypeErasedStateTransition<State>
     let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void)
 
+    fileprivate init<T>(typedTransition: TypedStateTransition<T, State>,
+                        effect: EffectWrapper<T, State>) {
+        let typeErasedTransition = typedTransition.typeErasedTransition
+        let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void) = { arg, sm in
+            guard let arg = arg as? T else { throw MappingError.invalidArgumentType }
+            return {
+                effect.effect(arg, sm)
+            }
+        }
+        self.init(erasedTransition: typeErasedTransition, effectWithArguments: effectWithArguments)
+    }
+
     fileprivate init(erasedTransition: TypeErasedStateTransition<State>,
                      effectWithArguments: @escaping (Any, StateMachine<State>) throws -> (() -> Void)) {
         self.erasedTransition = erasedTransition
@@ -65,23 +77,24 @@ public func |<T, State: Equatable>(input: BaseInput<T>, transition: StateTransit
 }
 
 public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, State>, effect: EffectWrapper<T, State>) -> MappedStateTransition<State> {
-    let typeErasedTransition = typedTransition.typeErasedTransition
-    let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void) = { arg, sm in
-        guard let arg = arg as? T else { throw MappingError.invalidArgumentType }
-        return {
-            effect.effect(arg, sm)
-        }
-    }
-
-    return MappedStateTransition(erasedTransition: typeErasedTransition, effectWithArguments: effectWithArguments)
+    return MappedStateTransition(typedTransition: typedTransition, effect: effect)
 }
 
 public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, State>, effect: EffectWrapper<Void, State>) -> MappedStateTransition<State> {
-    let typeErasedTransition = typedTransition.typeErasedTransition
-    let effectWithArguments: (Any, StateMachine<State>) throws -> (() -> Void) = { _, sm  in
-        return {
-            effect.effect((), sm)
-        }
+    let rewrappedEffect: EffectWrapper<T, State> = wrap { _, machine in
+        effect.effect((), machine)
     }
-    return MappedStateTransition(erasedTransition: typeErasedTransition, effectWithArguments: effectWithArguments)
+    return MappedStateTransition(typedTransition: typedTransition, effect: rewrappedEffect)
+}
+
+public func |<State: Equatable>(typedTransition: TypedStateTransition<Void, State>, effect: EffectWrapper<Void, State>) -> MappedStateTransition<State> {
+    return MappedStateTransition(typedTransition: typedTransition, effect: effect)
+}
+
+public func |<T, State: Equatable>(typedTransition: TypedStateTransition<T, State>, effect: NoEffect) -> MappedStateTransition<State> {
+    let noOp = EffectWrapper<Void, State> { _ in }
+    let rewrappedEffect: EffectWrapper<T, State> = wrap { _, machine in
+        noOp.effect((), machine)
+    }
+    return MappedStateTransition(typedTransition: typedTransition, effect: rewrappedEffect)
 }

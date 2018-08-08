@@ -4,9 +4,6 @@ public func wrap<State>(effect: @escaping EffectWrapper<Void, State>.Effect) -> 
 public func wrap<T, State>(effect: @escaping EffectWrapper<T, State>.EffectWithInput) -> EffectWrapper<T, State> {
     return EffectWrapper<T, State>(effect: effect)
 }
-public func noEffect<State>() -> EffectWrapper<Void, State> {
-    return EffectWrapper<Void, State>(effect: { _ in })
-}
 
 public struct EffectWrapper<T, State> {
     public typealias EffectWithInput = (T, StateMachine<State>) -> Void
@@ -26,4 +23,8 @@ public struct EffectWrapper<T, State> {
 public enum MappingError: Swift.Error {
     case invalidArgumentType
     case noMapForInput
+}
+
+public struct NoEffect {
+    public static func noEffect() -> NoEffect { return NoEffect() }
 }
